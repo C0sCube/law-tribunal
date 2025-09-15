@@ -3,3 +3,5 @@
 .venv/
 
 paths.json
+
+app/__pycache__/
