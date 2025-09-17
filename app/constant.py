@@ -1,5 +1,8 @@
+from datetime import datetime
+
 #WEBSITE URL DATA
 
+DEFAULT_TODAY_DATE = datetime.today().strftime("%d/%m/%Y")
 WEBSITE_URL = r"https://itat.gov.in/judicial/tribunalorders"
 
 

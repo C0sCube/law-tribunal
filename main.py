@@ -1,15 +1,13 @@
-import requests, pandas as pd
+import requests
 from tkinter import Tk
 from app.ui import AppUI
 from app.scraper import TribunalScraper
 from app.captcha_solver import download_audio, recognize_audio
 from app.constant import *
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 
 
 def run_all(ui):
-    date = "18/07/2025"
+    date = DEFAULT_TODAY_DATE
     scraper = TribunalScraper(WEBSITE_URL)
     scraper.start()
 
@@ -61,5 +59,5 @@ def run_all(ui):
 
 if __name__ == "__main__":
     root = Tk()
-    app = AppUI(root, run_all)  # pass runner into UI
+    app = AppUI(root, run_all)
     root.mainloop()

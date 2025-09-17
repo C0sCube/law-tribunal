@@ -1,0 +1,13 @@
+{
+  "download_path": "./downloads",
+  "start_date": "2025-08-15",
+  "end_date": "2025-08-17",
+  "base_url": "https://www.amfiindia.com/api/download-nav-history",
+  "verify_ssl": false,
+  "sleep_seconds": 4,
+  "headers":{
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "Accept": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "Referer": "https://www.amfiindia.com/"
+}
+}

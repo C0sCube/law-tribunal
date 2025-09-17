@@ -71,6 +71,8 @@ class TribunalScraper:
     def submit_captcha(self, captcha_text: str):
         captcha_input = self.driver.find_element(By.ID, "captcha")
         captcha_input.clear()
+        #UpperCase the captcha text
+        captcha_text = captcha_text.upper()
         for char in captcha_text:
             captcha_input.send_keys(char)
             time.sleep(0.1)
@@ -184,9 +186,6 @@ class TribunalScraper:
             print("🔄 Results refreshed.")
         except Exception as e:
             print("⚠️ Results did not refresh properly:", e)
-
-
-
 
     def close(self):
         self.driver.quit()
