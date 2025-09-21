@@ -1,0 +1,57 @@
+{
+    {
+  "benches": {
+    "203": "Agra",
+    "205": "Ahmedabad",
+    "207": "Allahabad",
+    "209": "Amritsar",
+    "211": "Bangalore",
+    "215": "Chandigarh",
+    "217": "Chennai",
+    "219": "Cochin",
+    "221": "Cuttack",
+    "260": "Dehradun",
+    "201": "Delhi",
+    "223": "Guwahati",
+    "225": "Hyderabad",
+    "227": "Indore",
+    "229": "Jabalpur",
+    "231": "Jaipur",
+    "233": "Jodhpur",
+    "235": "Kolkata",
+    "237": "Lucknow",
+    "199": "Mumbai",
+    "239": "Nagpur",
+    "241": "Panaji",
+    "243": "Patna",
+    "245": "Pune",
+    "247": "Raipur",
+    "249": "Rajkot",
+    "251": "Ranchi",
+    "256": "Surat",
+    "258": "Varanasi",
+    "253": "Visakhapatnam"
+  },
+  "appeals": {
+    "ITA": "Income Tax Appeal",
+    "CO": "Cross Objection",
+    "ITSSA": "Income Tax (Search & Seizure) Appeal",
+    "ITTPA": "Income Tax (Transfer Pricing) Appeal",
+    "ITITA": "Income Tax (International Taxation) Appeal",
+    "WTA": "Wealth Tax Appeal",
+    "BMA": "Black Money Appeal",
+    "EDA": "Estate Duty Appeal",
+    "INTTA": "Interest Tax Appeal",
+    "GTA": "Gift Tax Appeal",
+    "TDS": "TDS Appeal",
+    "STTA": "Security Transaction Tax Appeal",
+    "ETA": "Expenditure Tax Appeal",
+    "STA": "Sur Tax Appeal",
+    "HCD": "High Court Decision",
+    "SA": "Stay Application",
+    "MA": "Miscellaneous Application",
+    "RA": "Reference Application"
+  }
+}
+
+}
