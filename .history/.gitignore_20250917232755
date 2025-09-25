@@ -1,0 +1,9 @@
+
+.venv
+.venv/
+
+paths.json
+
+app/__pycache__/
+
+run.bat
