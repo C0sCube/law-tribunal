@@ -1,9 +1,30 @@
 from datetime import datetime
+import json, json5, os
+
+
+def create_dirs(root_path: str, dirs: list) -> list:
+    created_paths = []
+    for dir_name in dirs:
+        full_path = os.path.join(root_path, dir_name)
+        os.makedirs(full_path, exist_ok=True)
+        created_paths.append(full_path)
+    return created_paths if len(created_paths) > 1 else created_paths[0]
+
+
+def load_json(path: str):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def load_json5(path: str):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
 
 #WEBSITE URL DATA
 DEFAULT_TODAY_DATE = datetime.today().strftime("%d/%m/%Y")
 WEBSITE_URL = r"https://itat.gov.in/judicial/tribunalorders"
 
+DEFAULT_WAIT_TIME = 10
 
 # SELENIUM WINDOW CONSTANTS
 WINDOW_WIDTH = 700
@@ -26,6 +47,8 @@ DATE_SELECT = "order_date"
 
 AUDIO_PLAY_BUTTON = "//img[@alt='Play Icon']"
 AUDIO_SOURCE = "captchaAudio"
+
+CAPTCHA_REFRESH =  "//img[@alt='Refresh Icon']"
 
 SUBMIT_CAPTCHA_BUTTON = "b2"
 CAPTCHA_ID =  "captcha"
