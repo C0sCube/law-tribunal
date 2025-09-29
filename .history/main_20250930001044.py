@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 
-from app.constant import CONFIG, HEADING_BUTTON
+from app.constant import *
 from app.logger import setup_logger, set_global_logger
 from app.web_scraper import TribunalWebScraper
 from app.captcha_solver import recognize_audio
@@ -71,23 +71,3 @@ def runner(driver, bench_index, appeal_index, dateTake, cfg):
             logger.info("No valid data to save or scraping failed.")
     else:
         logger.warning("No results found or CAPTCHA failed after max attempts.")
-
-if __name__ == "__main__":
-    options = Options()
-    if CONFIG["browser"].get("suppress_logs"):
-        options.add_argument("--log-level=3")
-    if CONFIG["browser"].get("headless"):
-        options.add_argument("--headless")
-
-    driver = webdriver.Chrome(options=options)
-    driver.get(CONFIG["url"])
-
-    for bench_name in CONFIG["benches"]:
-        for appeal_name in CONFIG["appeals"]:
-            for dateTake in CONFIG["dates"]:
-                logger.info("========== New Run ==========")
-                runner(driver, bench_name, appeal_name, dateTake, CONFIG)
-
-    driver.quit()
-    time.sleep(10)
-    logger.info("Driver has been quit.")

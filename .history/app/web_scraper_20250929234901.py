@@ -43,7 +43,6 @@ class TribunalWebScraper:
 
     def get_captcha_audio(self):
         audio_btn = self.driver.find_element(By.XPATH, AUDIO_PLAY_BUTTON)
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", audio_btn)
         self._click_element(audio_btn)
         time.sleep(.5)
         return self.driver.find_element(By.ID, AUDIO_SOURCE).get_attribute("src")
@@ -57,9 +56,10 @@ class TribunalWebScraper:
         captcha_input = self.driver.find_element(By.ID, CAPTCHA_ID)
         captcha_input.clear()
         logger.info(f"Sending Text: {captcha_text}")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", captcha_input)
         captcha_input.send_keys(captcha_text)
         submit_btn = self.driver.find_element(By.ID, SUBMIT_CAPTCHA_BUTTON)
-        time.sleep(1)
+        time.sleep(2)
         self._click_element(submit_btn)
 
     def _click_element(self, element):
@@ -111,7 +111,7 @@ class TribunalWebScraper:
                     self.driver.execute_script("arguments[0].click();", page_btn)
                     logger.info(f"-> Clicked page {page_num}")
                     self.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#results table tbody tr")))
-                    # time.sleep(1.5)
+                    time.sleep(1.5)
 
                 rows = self.driver.find_elements(By.CSS_SELECTOR, "#results table tbody tr")
                 page_new_count = 0

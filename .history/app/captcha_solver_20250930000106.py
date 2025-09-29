@@ -1,36 +1,15 @@
-import os, requests, re, ffmpeg
+import os, requests, re
 # from pydub import AudioSegment
 # from pydub.effects import normalize
 # import speech_recognition as sr
 import whisper #type:ignore
 
 from app.logger import get_global_logger
-from app.constant import CAPTCHA_MP3_PATH, FFMPEG_PATH, CAPTCHA_WAV_PATH
+from app.constant import CAPTCHA_MP3_PATH, FFMPEG_PATH
+
+os.environ["PATH"] += os.pathsep + FFMPEG_PATH
 
 logger = get_global_logger()
-
-def recognize_audio(driver, url):
-    session = requests.Session()
-    for cookie in driver.get_cookies():
-        session.cookies.set(cookie['name'], cookie['value'])
-
-    os.environ["PATH"] += os.pathsep + FFMPEG_PATH
-    response = session.get(url)
-    with open(CAPTCHA_MP3_PATH, "wb") as f:
-        f.write(response.content)
-
-    # preprocess
-    # preprocess_audio(CAPTCHA_MP3_PATH, CAPTCHA_WAV_PATH)
-
-    logger.info("Beginning to detect audio...")
-    model = whisper.load_model("small.en")  # improved model
-    result = model.transcribe(CAPTCHA_MP3_PATH,language="en",initial_prompt="The audio contains only letters and numbers.")
-
-    data = result["text"]
-    correct_data = "".join(c for c in data if c.isalnum()).upper()
-    logger.info(f"Language: {result['language']}  |  Transcription: {correct_data}")
-    return correct_data
-
 
 # def recognize_audio(driver,url):
     

@@ -43,7 +43,6 @@ class TribunalWebScraper:
 
     def get_captcha_audio(self):
         audio_btn = self.driver.find_element(By.XPATH, AUDIO_PLAY_BUTTON)
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", audio_btn)
         self._click_element(audio_btn)
         time.sleep(.5)
         return self.driver.find_element(By.ID, AUDIO_SOURCE).get_attribute("src")

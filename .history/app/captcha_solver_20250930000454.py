@@ -9,6 +9,15 @@ from app.constant import CAPTCHA_MP3_PATH, FFMPEG_PATH, CAPTCHA_WAV_PATH
 
 logger = get_global_logger()
 
+# def preprocess_audio(input_path, output_path):
+#     (
+#         ffmpeg
+#         .input(input_path)
+#         .output(output_path, ac=1, ar=16000, format="wav", loglevel="quiet")
+#         .overwrite_output()
+#         .run()
+#     )
+
 def recognize_audio(driver, url):
     session = requests.Session()
     for cookie in driver.get_cookies():
@@ -28,6 +37,7 @@ def recognize_audio(driver, url):
 
     data = result["text"]
     correct_data = "".join(c for c in data if c.isalnum()).upper()
+
     logger.info(f"Language: {result['language']}  |  Transcription: {correct_data}")
     return correct_data
 

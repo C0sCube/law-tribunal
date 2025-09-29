@@ -58,7 +58,7 @@ def setup_logger(name="app_logger",log_dir="logs",log_level=logging.DEBUG,to_con
 # --- Global registry with short names ---
 _active_logger = None
 
-def set_global_logger(logger):
+def set_logger(logger):
     global _active_logger
     _active_logger = logger
 

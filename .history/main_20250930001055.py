@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 
-from app.constant import CONFIG, HEADING_BUTTON
+from app.constant import *
 from app.logger import setup_logger, set_global_logger
 from app.web_scraper import TribunalWebScraper
 from app.captcha_solver import recognize_audio

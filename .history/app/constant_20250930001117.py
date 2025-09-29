@@ -23,7 +23,7 @@ def load_json5(path: str):
 CONFIG = {
     "url": "https://itat.gov.in/judicial/tribunalorders",
     "benches": [20],        # can be list [20,21,22] or range via start..end
-    "appeals": [1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],   # same as above
+    "appeals": [1, 2, 3],   # same as above
     "dates": ["28/09/2025"], # allow multiple or a range
     "max_attempts": 5,
     "output_dir": "results",

@@ -15,16 +15,17 @@ class TribunalWebScraper:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, DEFAULT_WAIT_TIME)
-        
+        self.logger = logger
+
     def set_search_options(self, bench_index: int, appeal_index: int, date: str):
         try:
             bench_name = self._select_dropdown_option(BENCH_SELECT, bench_index, "Bench")
             appeal_name = self._select_dropdown_option(APPLIC_SELECT, appeal_index, "Appeal")
             self._set_date(date)
-            logger.info(f"Search options set: Bench='{bench_name}', Appeal='{appeal_name}', Date='{date}'")
+            self.logger.info(f"Search options set: Bench='{bench_name}', Appeal='{appeal_name}', Date='{date}'")
             return bench_name, appeal_name, date
         except Exception as e:
-            logger.error(f"Failed to set search options: {e}")
+            self.logger.error(f"Failed to set search options: {e}")
             raise
 
     def _select_dropdown_option(self, element_id, index, label):
@@ -43,23 +44,22 @@ class TribunalWebScraper:
 
     def get_captcha_audio(self):
         audio_btn = self.driver.find_element(By.XPATH, AUDIO_PLAY_BUTTON)
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", audio_btn)
         self._click_element(audio_btn)
-        time.sleep(.5)
+        time.sleep(1)
         return self.driver.find_element(By.ID, AUDIO_SOURCE).get_attribute("src")
 
     def refresh_captcha(self):
         refresh_btn = self.driver.find_element(By.XPATH, AUDIO_PLAY_BUTTON)
         self._click_element(refresh_btn)
-        time.sleep(.5)
+        time.sleep(1)
 
     def submit_captcha(self, captcha_text: str):
         captcha_input = self.driver.find_element(By.ID, CAPTCHA_ID)
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", captcha_input)
         captcha_input.clear()
-        logger.info(f"Sending Text: {captcha_text}")
+        self.logger.info(f"Sending Text: {captcha_text}")
         captcha_input.send_keys(captcha_text)
         submit_btn = self.driver.find_element(By.ID, SUBMIT_CAPTCHA_BUTTON)
-        time.sleep(1)
         self._click_element(submit_btn)
 
     def _click_element(self, element):
@@ -70,33 +70,33 @@ class TribunalWebScraper:
         try:
             rows = self.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#results table tbody tr")))
             if rows:
-                logger.info(f"Results loaded with {len(rows)} row(s).")
+                self.logger.info(f"Results loaded with {len(rows)} row(s).")
                 return True
-            logger.warning("Results table found but no rows present.")
+            self.logger.warning("Results table found but no rows present.")
             return False
         except Exception as e:
-            logger.error(f"Error checking results: {e}")
+            self.logger.error(f"Error checking results: {e}")
             return False
 
     def scrape_results(self, bench_name, appeal_name):
-        logger.info("Page Loaded.")
+        self.logger.info("Page Loaded.")
         try:
             self.wait.until(lambda d: (
                 d.find_elements(By.CSS_SELECTOR, "#results table tbody tr td[colspan='5']")
                 or d.find_elements(By.CSS_SELECTOR, "#results table tbody tr td:nth-child(2)")
             ))
         except Exception:
-            logger.warning("Results table did not load.")
+            self.logger.warning("Results table did not load.")
             return None
 
         no_data_cells = self.driver.find_elements(By.CSS_SELECTOR, "#results table tbody tr td[colspan='5']")
         if no_data_cells and "No Records Found" in no_data_cells[0].text:
-            logger.warning("No records found. Skipping pagination.")
+            self.logger.warning("No records found. Skipping pagination.")
             return None
 
         page_buttons = self.driver.find_elements(By.XPATH, PAGE_BTN_XPATH)
         max_pages = len(page_buttons) if page_buttons else 1
-        logger.info(f"Total Pages are {max_pages}.")
+        self.logger.info(f"Total Pages are {max_pages}.")
 
         data, seen_links = [], set()
 
@@ -106,12 +106,12 @@ class TribunalWebScraper:
                 self.driver.execute_script("arguments[0].scrollIntoView(true);", page_btn)
 
                 if page_btn.get_attribute("disabled"):
-                    logger.info(f"Skipping page {page_num} (already active).")
+                    self.logger.info(f"Skipping page {page_num} (already active).")
                 else:
                     self.driver.execute_script("arguments[0].click();", page_btn)
-                    logger.info(f"-> Clicked page {page_num}")
+                    self.logger.info(f"-> Clicked page {page_num}")
                     self.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#results table tbody tr")))
-                    # time.sleep(1.5)
+                    time.sleep(1.5)
 
                 rows = self.driver.find_elements(By.CSS_SELECTOR, "#results table tbody tr")
                 page_new_count = 0
@@ -127,9 +127,9 @@ class TribunalWebScraper:
                     except Exception:
                         continue
 
-                logger.info(f"Rows on page {page_num}: {len(rows)} | new added: {page_new_count}")
+                self.logger.info(f"Rows on page {page_num}: {len(rows)} | new added: {page_new_count}")
             except Exception as e:
-                logger.warning(f"Failed to process page {page_num}: {e}")
+                self.logger.warning(f"⚠️ Failed to process page {page_num}: {e}")
                 continue
 
         if data:

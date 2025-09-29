@@ -1,4 +1,4 @@
-import time,logging  #type:ignore
+import time  #type:ignore
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By                # Locators (ID, CLASS_NAME, XPATH, etc.)
@@ -8,86 +8,98 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 
-from app.constant import CONFIG, HEADING_BUTTON
-from app.logger import setup_logger, set_global_logger
+from app.constant import *
+from app.logger import setup_logger
 from app.web_scraper import TribunalWebScraper
 from app.captcha_solver import recognize_audio
 
 
-logger = setup_logger("law_scraper",log_dir="logs", log_level=logging.DEBUG)
-set_global_logger(logger)
+logger = setup_logger("law_scraper",log_dir="logs", log_level=10, to_console=True, to_file=True)
 
-def runner(driver, bench_index, appeal_index, dateTake, cfg):
-    MAX_ATTEMPTS = cfg.get("max_attempts", 5)
+def runner(driver, bench_index, appeal_index, dateTake):
+    MAX_ATTEMPTS = 5
     success = False
     attempt = 0
     
     scraper = TribunalWebScraper(driver)
-    logger.info(f"Running for {bench_index}; {appeal_index}.")
     
+    logger.info(f"Running for {bench_index}; {appeal_index}.")
     while attempt < MAX_ATTEMPTS and not success:
+        
         if attempt == 0:
-            driver.get(cfg["url"])
+            driver.get(URL)
         logger.info(f"Attempt: {attempt + 1}")
         attempt += 1
         try:
-            accordion_btn = scraper.wait.until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, HEADING_BUTTON))
-            )
+            #Ensure the accordion tab is open
+            accordion_btn = scraper.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, HEADING_BUTTON)))
             driver.execute_script("arguments[0].click();", accordion_btn)
+            time.sleep(1)
 
-            bench_name, appeal_name, date_used = scraper.set_search_options(
-                bench_index, appeal_index, dateTake
-            )
+            bench_name, appeal_name, date_used = scraper.set_search_options(bench_index, appeal_index, dateTake)
 
+            
             audio_url = scraper.get_captcha_audio()
-            data = recognize_audio(scraper.driver, audio_url)
+            data = recognize_audio(scraper.driver,audio_url)
+            time.sleep(0.2)
             scraper.submit_captcha(data)
-
+            time.sleep(2)
             try:
-                WebDriverWait(driver, 5).until(EC.alert_is_present())
+                WebDriverWait(driver, 10).until(EC.alert_is_present())
                 alert = scraper.driver.switch_to.alert
                 logger.warning(f"Alert says: {alert.text}")
                 alert.accept()
                 logger.info("Refreshing website to get new captcha...")
+                # scraper.refresh_captcha()
                 scraper.driver.refresh()
-                continue
+                continue  # Retry loop
             except TimeoutException:
                 logger.info("No alert — CAPTCHA accepted!")
                 success = True
                 time.sleep(0.5)
                 break
+
         except Exception as e:
             logger.error(f"Failed during attempt {attempt}: {e}")
-            time.sleep(0.5)
+            time.sleep(.5)
 
     if success and scraper.check_results_loaded():
         df = scraper.scrape_results(bench_name, appeal_name)
+
         if isinstance(df, pd.DataFrame) and not df.empty:
-            out_path = f"{cfg['output_dir']}/{bench_name}_{appeal_name}.xlsx"
-            df.to_excel(out_path, index=False)
-            logger.info(f"Data saved at {out_path}.")
+            df.to_excel(f"{bench_name}_{appeal_name}.xlsx", index=False)
+            logger.info("Data saved.")
         else:
             logger.info("No valid data to save or scraping failed.")
+
     else:
+        
         logger.warning("No results found or CAPTCHA failed after max attempts.")
 
+
+
+URL = "https://itat.gov.in/judicial/tribunalorders"
+
 if __name__ == "__main__":
+    
+    bench_name = 20
+    appeal_name = 1
+    dates = "25/09/2025"
+    
+    
     options = Options()
-    if CONFIG["browser"].get("suppress_logs"):
-        options.add_argument("--log-level=3")
-    if CONFIG["browser"].get("headless"):
-        options.add_argument("--headless")
-
+    options.add_argument("--log-level=3")  # Suppress most logs
     driver = webdriver.Chrome(options=options)
-    driver.get(CONFIG["url"])
+    driver.get(URL)
+    
+    for bench_name in range(11,12):
+        for appeal_name in range(1,19):
+            logger.info(f"==================Started this Section.==================")
+            runner(driver,bench_name,appeal_name,dates)
 
-    for bench_name in CONFIG["benches"]:
-        for appeal_name in CONFIG["appeals"]:
-            for dateTake in CONFIG["dates"]:
-                logger.info("========== New Run ==========")
-                runner(driver, bench_name, appeal_name, dateTake, CONFIG)
-
+            # driver.refresh()
+    
     driver.quit()
     time.sleep(10)
     logger.info("Driver has been quit.")
+    
