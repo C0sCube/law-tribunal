@@ -1,0 +1,14 @@
+
+{
+    "input_path":"C:\\Users\\kaustubh.keny\\Projects\\office-work\\law-tribunal",
+    "output_dir":"C:\\Users\\kaustubh.keny\\Projects\\office-work\\law-tribunal\\output",
+    "url": "https://itat.gov.in/judicial/tribunalorders",
+    "benches": [10,11,12],  //30 benches in total     
+    "appeals": [1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], //There are total 18 appeals
+    "dates": ["29/09/2025"],
+    "max_attempts": 5,
+    "browser": {
+        "headless": false,
+        "suppress_logs": true
+    }
+}

@@ -1,14 +1,12 @@
 from datetime import datetime
 import json, json5, os
 
+root_dir = os.path.join(os.path.dirname(__file__),"..")
 
-def create_dirs(root_path: str, dirs: list) -> list:
-    created_paths = []
-    for dir_name in dirs:
-        full_path = os.path.join(root_path, dir_name)
-        os.makedirs(full_path, exist_ok=True)
-        created_paths.append(full_path)
-    return created_paths if len(created_paths) > 1 else created_paths[0]
+def create_dir(root_path: str, *args) -> str:
+    full_path = os.path.join(root_path, *args)
+    os.makedirs(full_path, exist_ok=True)
+    return full_path
 
 
 def load_json(path: str):
@@ -17,21 +15,28 @@ def load_json(path: str):
 
 def load_json5(path: str):
     with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return json5.load(f)
 
 
-CONFIG = {
-    "url": "https://itat.gov.in/judicial/tribunalorders",
-    "benches": [20],        # can be list [20,21,22] or range via start..end
-    "appeals": [1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],   # same as above
-    "dates": ["28/09/2025"], # allow multiple or a range
-    "max_attempts": 5,
-    "output_dir": "results",
-    "browser": {
-        "headless": False,
-        "suppress_logs": True
-    }
-}
+CONFIG = load_json5(os.path.join(root_dir,"configs.json5"))
+
+WEBSITE_URL = CONFIG.get("url", "https://itat.gov.in/judicial/tribunalorders")
+INPUT_PATH = CONFIG.get("input_path", os.path.dirname(__file__))
+OUTPUT_DIR = CONFIG.get("output_dir", "output")
+LOG_DIR = create_dir(OUTPUT_DIR,"logs")
+
+# CONFIG = {
+#     "url": "https://itat.gov.in/judicial/tribunalorders",
+#     "benches": [20],        # can be list [20,21,22] or range via start..end
+#     "appeals": [1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],   # same as above
+#     "dates": ["28/09/2025"], # allow multiple or a range
+#     "max_attempts": 5,
+#     "output_dir": "results",
+#     "browser": {
+#         "headless": False,
+#         "suppress_logs": True
+#     }
+# }
 
 
 

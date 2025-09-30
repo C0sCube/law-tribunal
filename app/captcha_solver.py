@@ -1,9 +1,9 @@
-import os, requests, re, ffmpeg
+import os, requests, re
 # from pydub import AudioSegment
 # from pydub.effects import normalize
 # import speech_recognition as sr
 import whisper #type:ignore
-
+import certifi
 from app.logger import get_global_logger
 from app.constant import CAPTCHA_MP3_PATH, FFMPEG_PATH, CAPTCHA_WAV_PATH
 
@@ -13,9 +13,19 @@ def recognize_audio(driver, url):
     session = requests.Session()
     for cookie in driver.get_cookies():
         session.cookies.set(cookie['name'], cookie['value'])
+        print(f"{cookie["name"],{cookie["value"]}}")
 
     os.environ["PATH"] += os.pathsep + FFMPEG_PATH
-    response = session.get(url)
+    # response = session.get(url, verify=False)
+    try:
+        response = session.get(url, verify=False)
+        logger.warning("Falling back to unverified SSL request.")
+        logger.info(f"Audio fetch status: {response.status_code}")
+    except Exception as e:
+        logger.error(f"Fallback failed: {e}")
+        return None
+
+    logger.info(f"Audio fetch status: {response.status_code}")
     with open(CAPTCHA_MP3_PATH, "wb") as f:
         f.write(response.content)
 

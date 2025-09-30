@@ -8,13 +8,14 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 
-from app.constant import CONFIG, HEADING_BUTTON
+from app.constant import CONFIG, HEADING_BUTTON, LOG_DIR,OUTPUT_DIR
+from app.constant import AUDIO_PLAY_BUTTON
 from app.logger import setup_logger, set_global_logger
 from app.web_scraper import TribunalWebScraper
 from app.captcha_solver import recognize_audio
 
 
-logger = setup_logger("law_scraper",log_dir="logs", log_level=logging.DEBUG)
+logger = setup_logger("law_scraper",log_dir=LOG_DIR, log_level=logging.DEBUG)
 set_global_logger(logger)
 
 def runner(driver, bench_index, appeal_index, dateTake, cfg):
@@ -40,8 +41,13 @@ def runner(driver, bench_index, appeal_index, dateTake, cfg):
                 bench_index, appeal_index, dateTake
             )
 
-            audio_url = scraper.get_captcha_audio()
-            data = recognize_audio(scraper.driver, audio_url)
+            # audio_url = scraper.get_captcha_audio()
+            # logger.info(f"Fetched audio url: {audio_url}")
+            # data = recognize_audio(scraper.driver, audio_url)
+            # logger.info("Submitting to captcha.")
+            audio_btn = driver.find_element(By.XPATH, AUDIO_PLAY_BUTTON)
+            driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", audio_btn)
+            data = input("Enter the Captcha seen: ")
             scraper.submit_captcha(data)
 
             try:
