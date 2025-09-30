@@ -2,44 +2,44 @@ import os, requests, re
 # from pydub import AudioSegment
 # from pydub.effects import normalize
 # import speech_recognition as sr
-import whisper #type:ignore
-import certifi
-from app.logger import get_global_logger
-from app.constant import CAPTCHA_MP3_PATH, FFMPEG_PATH, CAPTCHA_WAV_PATH
+# import whisper #type:ignore
+# import certifi
+# from app.logger import get_global_logger
+# from app.constant import CAPTCHA_MP3_PATH, FFMPEG_PATH, CAPTCHA_WAV_PATH
 
-logger = get_global_logger()
+# logger = get_global_logger()
 
-def recognize_audio(driver, url):
-    session = requests.Session()
-    for cookie in driver.get_cookies():
-        session.cookies.set(cookie['name'], cookie['value'])
-        print(f"{cookie["name"],{cookie["value"]}}")
+# def recognize_audio(driver, url):
+#     session = requests.Session()
+#     for cookie in driver.get_cookies():
+#         session.cookies.set(cookie['name'], cookie['value'])
+#         print(f"{cookie["name"],{cookie["value"]}}")
 
-    os.environ["PATH"] += os.pathsep + FFMPEG_PATH
-    # response = session.get(url, verify=False)
-    try:
-        response = session.get(url, verify=False)
-        logger.warning("Falling back to unverified SSL request.")
-        logger.info(f"Audio fetch status: {response.status_code}")
-    except Exception as e:
-        logger.error(f"Fallback failed: {e}")
-        return None
+#     os.environ["PATH"] += os.pathsep + FFMPEG_PATH
+#     # response = session.get(url, verify=False)
+#     try:
+#         response = session.get(url, verify=False)
+#         logger.warning("Falling back to unverified SSL request.")
+#         logger.info(f"Audio fetch status: {response.status_code}")
+#     except Exception as e:
+#         logger.error(f"Fallback failed: {e}")
+#         return None
 
-    logger.info(f"Audio fetch status: {response.status_code}")
-    with open(CAPTCHA_MP3_PATH, "wb") as f:
-        f.write(response.content)
+#     logger.info(f"Audio fetch status: {response.status_code}")
+#     with open(CAPTCHA_MP3_PATH, "wb") as f:
+#         f.write(response.content)
 
-    # preprocess
-    # preprocess_audio(CAPTCHA_MP3_PATH, CAPTCHA_WAV_PATH)
+#     # preprocess
+#     # preprocess_audio(CAPTCHA_MP3_PATH, CAPTCHA_WAV_PATH)
 
-    logger.info("Beginning to detect audio...")
-    model = whisper.load_model("small.en")  # improved model
-    result = model.transcribe(CAPTCHA_MP3_PATH,language="en",initial_prompt="The audio contains only letters and numbers.")
+#     logger.info("Beginning to detect audio...")
+#     model = whisper.load_model("small.en")  # improved model
+#     result = model.transcribe(CAPTCHA_MP3_PATH,language="en",initial_prompt="The audio contains only letters and numbers.")
 
-    data = result["text"]
-    correct_data = "".join(c for c in data if c.isalnum()).upper()
-    logger.info(f"Language: {result['language']}  |  Transcription: {correct_data}")
-    return correct_data
+#     data = result["text"]
+#     correct_data = "".join(c for c in data if c.isalnum()).upper()
+#     logger.info(f"Language: {result['language']}  |  Transcription: {correct_data}")
+#     return correct_data
 
 
 # def recognize_audio(driver,url):

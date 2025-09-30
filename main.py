@@ -12,7 +12,7 @@ from app.constant import CONFIG, HEADING_BUTTON, LOG_DIR,OUTPUT_DIR
 from app.constant import AUDIO_PLAY_BUTTON
 from app.logger import setup_logger, set_global_logger
 from app.web_scraper import TribunalWebScraper
-from app.captcha_solver import recognize_audio
+# from app.captcha_solver import recognize_audio
 
 
 logger = setup_logger("law_scraper",log_dir=LOG_DIR, log_level=logging.DEBUG)

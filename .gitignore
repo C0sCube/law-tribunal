@@ -5,3 +5,6 @@
 paths.json
 
 app/__pycache__/
+configs.json5
+
+.history/

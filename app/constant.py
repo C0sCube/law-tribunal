@@ -54,7 +54,7 @@ DEFAULT_WAIT = 2
 
 CAPTCHA_MP3_PATH = r"app\temp\captcha.mp3"
 CAPTCHA_WAV_PATH = r"app\temp\captcha.wav"
-FFMPEG_PATH = r"C:\Users\kaustubh.keny\ffmpeg-8.0-essentials_build\bin"
+# FFMPEG_PATH = r"C:\Users\kaustubh.keny\ffmpeg-8.0-essentials_build\bin"
 
 
 BENCH_DROPDOWN = "//select[@id='ddlBench']"
