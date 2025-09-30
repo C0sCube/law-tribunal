@@ -1,4 +1,4 @@
-import time,logging  #type:ignore
+import time,logging, os #type:ignore
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By                # Locators (ID, CLASS_NAME, XPATH, etc.)
@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 
-from app.constant import CONFIG, HEADING_BUTTON, LOG_DIR,OUTPUT_DIR
+from app.constant import CONFIG, HEADING_BUTTON, LOG_DIR,DATA_DIR
 from app.constant import AUDIO_PLAY_BUTTON
 from app.logger import setup_logger, set_global_logger
 from app.web_scraper import TribunalWebScraper
@@ -70,8 +70,10 @@ def runner(driver, bench_index, appeal_index, dateTake, cfg):
     if success and scraper.check_results_loaded():
         df = scraper.scrape_results(bench_name, appeal_name)
         if isinstance(df, pd.DataFrame) and not df.empty:
-            out_path = f"{cfg['output_dir']}/{bench_name}_{appeal_name}.xlsx"
-            df.to_excel(out_path, index=False)
+            out_path = os.path.join(DATA_DIR,f"{bench_name}_law_tribunal.xlsx")
+            with pd.ExcelWriter(out_path) as writer:
+                df.to_excel(writer,sheet_name=f"{bench_name}_{appeal_name}", index=False)
+            # df.to_excel(out_path, index=False)
             logger.info(f"Data saved at {out_path}.")
         else:
             logger.info("No valid data to save or scraping failed.")

@@ -20,10 +20,13 @@ def load_json5(path: str):
 
 CONFIG = load_json5(os.path.join(root_dir,"configs.json5"))
 
+TODAY = datetime.now().strftime("%Y-%m-%d")
+
 WEBSITE_URL = CONFIG.get("url", "https://itat.gov.in/judicial/tribunalorders")
 INPUT_PATH = CONFIG.get("input_path", os.path.dirname(__file__))
 OUTPUT_DIR = CONFIG.get("output_dir", "output")
-LOG_DIR = create_dir(OUTPUT_DIR,"logs")
+LOG_DIR = create_dir(OUTPUT_DIR,"logs",TODAY)
+DATA_DIR = create_dir(OUTPUT_DIR,TODAY)
 
 # CONFIG = {
 #     "url": "https://itat.gov.in/judicial/tribunalorders",
