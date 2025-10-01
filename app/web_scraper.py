@@ -125,7 +125,7 @@ class TribunalWebScraper:
                         parties = row.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text.strip()
                         order_link = row.find_element(By.CSS_SELECTOR, "td:nth-child(4) a").get_attribute("href")
                         if order_link: #and order_link not in seen_links
-                            seen_links.add(order_link)
+                            # seen_links.add(order_link)
                             data.append([bench_name, appeal_name, parties, order_link])
                             page_new_count += 1
                     except Exception:
@@ -140,5 +140,6 @@ class TribunalWebScraper:
             df = pd.DataFrame(data, columns=["Bench", "Appeal", "Parties", "Order Link"])
             df["Order Link"] = df["Order Link"].apply(lambda url: f'=HYPERLINK("{url}", "{url}")')
             logger.info(f"Scraped Data Preview:\n{df.head(5)}")
+            df.head(10)
             return df
         return None

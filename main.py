@@ -1,4 +1,5 @@
 import time,logging, os #type:ignore
+from datetime import datetime
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By                # Locators (ID, CLASS_NAME, XPATH, etc.)
@@ -8,10 +9,11 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
 
-from app.constant import CONFIG, HEADING_BUTTON, LOG_DIR,DATA_DIR
+from app.constant import CONFIG, HEADING_BUTTON, LOG_DIR, OUTPUT_DIR
 from app.constant import AUDIO_PLAY_BUTTON
 from app.logger import setup_logger, set_global_logger
 from app.web_scraper import TribunalWebScraper
+from app.utils import Helper
 # from app.captcha_solver import recognize_audio
 
 
@@ -69,12 +71,15 @@ def runner(driver, bench_index, appeal_index, dateTake, cfg):
 
     if success and scraper.check_results_loaded():
         df = scraper.scrape_results(bench_name, appeal_name)
+        ref_date = datetime.strptime(dateTake, "%d/%m/%Y").strftime("%d%m%Y")
+        out_path = Helper.create_dir(OUTPUT_DIR,f"{ref_date}_DATA")
+        
         if isinstance(df, pd.DataFrame) and not df.empty:
-            out_path = os.path.join(DATA_DIR,f"{bench_name}_law_tribunal.xlsx")
-            with pd.ExcelWriter(out_path,mode='a') as writer:
-                df.to_excel(writer,sheet_name=f"{bench_name}_{appeal_name}"[:31], index=False)
-            # df.to_excel(out_path, index=False)
-            logger.info(f"Data saved at {out_path}.")
+            file_path = os.path.join(out_path,f"{bench_name}_{appeal_name}_{ref_date}.xlsx")
+            # with pd.ExcelWriter(out_path,mode='w') as writer:
+            #     df.to_excel(writer, index=False)
+            df.to_excel(file_path, index=False)
+            logger.info(f"Data saved at {file_path}.")
         else:
             logger.info("No valid data to save or scraping failed.")
     else:

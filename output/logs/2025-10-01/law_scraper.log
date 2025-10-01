@@ -1,0 +1,95 @@
+2025-10-01 11:14:39 [INFO]: ========== New Run ==========
+2025-10-01 11:14:39 [INFO]: Running for 20; 1 dated 30/09/2025.
+2025-10-01 11:14:40 [INFO]: Attempt: 1
+2025-10-01 11:15:01 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:15:01 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:15:01 [INFO]: ========== New Run ==========
+2025-10-01 11:15:01 [INFO]: Running for 20; 2 dated 30/09/2025.
+2025-10-01 11:15:01 [INFO]: Attempt: 1
+2025-10-01 11:15:16 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:15:16 [INFO]: Data saved at output\2025-10-01\Mumbai_Cross Objection_30092025.xlsx.
+2025-10-01 11:15:16 [INFO]: ========== New Run ==========
+2025-10-01 11:15:16 [INFO]: Running for 20; 3 dated 30/09/2025.
+2025-10-01 11:15:17 [INFO]: Attempt: 1
+2025-10-01 11:17:04 [INFO]: ========== New Run ==========
+2025-10-01 11:17:04 [INFO]: Running for 20; 1 dated 30/09/2025.
+2025-10-01 11:17:04 [INFO]: Attempt: 1
+2025-10-01 11:17:30 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:17:31 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:17:31 [INFO]: ========== New Run ==========
+2025-10-01 11:17:31 [INFO]: Running for 20; 2 dated 30/09/2025.
+2025-10-01 11:17:31 [INFO]: Attempt: 1
+2025-10-01 11:17:43 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:17:44 [INFO]: Data saved at output\2025-10-01\Mumbai_Cross Objection_30092025.xlsx.
+2025-10-01 11:17:44 [INFO]: ========== New Run ==========
+2025-10-01 11:17:44 [INFO]: Running for 20; 3 dated 30/09/2025.
+2025-10-01 11:17:45 [INFO]: Attempt: 1
+2025-10-01 11:18:11 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:18:11 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:18:11 [INFO]: ========== New Run ==========
+2025-10-01 11:18:11 [INFO]: Running for 20; 4 dated 30/09/2025.
+2025-10-01 11:18:12 [INFO]: Attempt: 1
+2025-10-01 11:18:26 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:18:26 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:18:26 [INFO]: ========== New Run ==========
+2025-10-01 11:18:26 [INFO]: Running for 20; 5 dated 30/09/2025.
+2025-10-01 11:18:27 [INFO]: Attempt: 1
+2025-10-01 11:18:40 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:18:41 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:18:41 [INFO]: ========== New Run ==========
+2025-10-01 11:18:41 [INFO]: Running for 20; 6 dated 30/09/2025.
+2025-10-01 11:18:41 [INFO]: Attempt: 1
+2025-10-01 11:18:53 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:18:54 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:18:54 [INFO]: ========== New Run ==========
+2025-10-01 11:18:54 [INFO]: Running for 20; 7 dated 30/09/2025.
+2025-10-01 11:18:54 [INFO]: Attempt: 1
+2025-10-01 11:19:07 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:19:07 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:19:07 [INFO]: ========== New Run ==========
+2025-10-01 11:19:07 [INFO]: Running for 20; 8 dated 30/09/2025.
+2025-10-01 11:19:07 [INFO]: Attempt: 1
+2025-10-01 11:19:47 [INFO]: ========== New Run ==========
+2025-10-01 11:19:47 [INFO]: Running for 20; 1 dated 29/09/2025.
+2025-10-01 11:19:47 [INFO]: Attempt: 1
+2025-10-01 11:20:00 [WARNING]: Alert says: Please enter valid captcha
+2025-10-01 11:20:00 [INFO]: Refreshing website to get new captcha...
+2025-10-01 11:20:00 [INFO]: Attempt: 2
+2025-10-01 11:20:18 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:20:23 [INFO]: Data saved at output\2025-10-01\Mumbai_Income Tax Appeal_29092025.xlsx.
+2025-10-01 11:20:23 [INFO]: ========== New Run ==========
+2025-10-01 11:20:23 [INFO]: Running for 20; 2 dated 29/09/2025.
+2025-10-01 11:20:23 [INFO]: Attempt: 1
+2025-10-01 11:25:54 [INFO]: ========== New Run ==========
+2025-10-01 11:25:54 [INFO]: Running for 20; 1 dated 29/09/2025.
+2025-10-01 11:25:55 [INFO]: Attempt: 1
+2025-10-01 11:26:16 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:26:21 [INFO]: Data saved at output\29092025_DATA\Mumbai_Income Tax Appeal_29092025.xlsx.
+2025-10-01 11:26:21 [INFO]: ========== New Run ==========
+2025-10-01 11:26:21 [INFO]: Running for 20; 2 dated 29/09/2025.
+2025-10-01 11:26:21 [INFO]: Attempt: 1
+2025-10-01 11:26:42 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:26:43 [INFO]: Data saved at output\29092025_DATA\Mumbai_Cross Objection_29092025.xlsx.
+2025-10-01 11:26:43 [INFO]: ========== New Run ==========
+2025-10-01 11:26:43 [INFO]: Running for 20; 3 dated 29/09/2025.
+2025-10-01 11:26:43 [INFO]: Attempt: 1
+2025-10-01 11:26:59 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:27:00 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:27:00 [INFO]: ========== New Run ==========
+2025-10-01 11:27:00 [INFO]: Running for 20; 4 dated 29/09/2025.
+2025-10-01 11:27:00 [INFO]: Attempt: 1
+2025-10-01 11:27:12 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:27:13 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:27:13 [INFO]: ========== New Run ==========
+2025-10-01 11:27:13 [INFO]: Running for 20; 5 dated 29/09/2025.
+2025-10-01 11:27:13 [INFO]: Attempt: 1
+2025-10-01 11:27:24 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:27:25 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:27:25 [INFO]: ========== New Run ==========
+2025-10-01 11:27:25 [INFO]: Running for 20; 6 dated 29/09/2025.
+2025-10-01 11:27:25 [INFO]: Attempt: 1
+2025-10-01 11:27:38 [INFO]: No alert — CAPTCHA accepted!
+2025-10-01 11:27:39 [INFO]: No valid data to save or scraping failed.
+2025-10-01 11:27:39 [INFO]: ========== New Run ==========
+2025-10-01 11:27:39 [INFO]: Running for 20; 7 dated 29/09/2025.
+2025-10-01 11:27:39 [INFO]: Attempt: 1
