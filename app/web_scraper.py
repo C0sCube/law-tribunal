@@ -124,7 +124,7 @@ class TribunalWebScraper:
                     try:
                         parties = row.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text.strip()
                         order_link = row.find_element(By.CSS_SELECTOR, "td:nth-child(4) a").get_attribute("href")
-                        if order_link and order_link not in seen_links:
+                        if order_link: #and order_link not in seen_links
                             seen_links.add(order_link)
                             data.append([bench_name, appeal_name, parties, order_link])
                             page_new_count += 1

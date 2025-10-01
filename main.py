@@ -24,7 +24,7 @@ def runner(driver, bench_index, appeal_index, dateTake, cfg):
     attempt = 0
     
     scraper = TribunalWebScraper(driver)
-    logger.info(f"Running for {bench_index}; {appeal_index}.")
+    logger.info(f"Running for {bench_index}; {appeal_index} dated {dateTake}.")
     
     while attempt < MAX_ATTEMPTS and not success:
         if attempt == 0:
@@ -71,8 +71,8 @@ def runner(driver, bench_index, appeal_index, dateTake, cfg):
         df = scraper.scrape_results(bench_name, appeal_name)
         if isinstance(df, pd.DataFrame) and not df.empty:
             out_path = os.path.join(DATA_DIR,f"{bench_name}_law_tribunal.xlsx")
-            with pd.ExcelWriter(out_path) as writer:
-                df.to_excel(writer,sheet_name=f"{bench_name}_{appeal_name}", index=False)
+            with pd.ExcelWriter(out_path,mode='a') as writer:
+                df.to_excel(writer,sheet_name=f"{bench_name}_{appeal_name}"[:31], index=False)
             # df.to_excel(out_path, index=False)
             logger.info(f"Data saved at {out_path}.")
         else:
